@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<title>Will You Be My Valentine?</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Comic Sans MS',cursive;}
+body{height:100vh;background:linear-gradient(120deg,#ff9a9e,#fad0c4);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.card{background: rgba(255,255,255,0.95); padding:50px; border-radius:25px; text-align:center; z-index:2; box-shadow: 0 8px 20px rgba(0,0,0,0.2);}
+h1{color:#ff4d6d; margin-bottom:30px; font-size:2em;}
+.buttons button{padding:15px 35px; font-size:18px; border-radius:30px; border:none; cursor:pointer; margin:10px; transition:0.3s;}
+#yesBtn{background:#ff4d6d;color:white;}
+#noBtn{background:#ccc;}
+/* Хөдөлгөөнт зүрхүүд */
+.hearts span{position:absolute; animation:float linear infinite; display:block;}
+@keyframes float{0%{transform: translateY(100vh) rotate(0deg) scale(0.5);}100%{transform: translateY(-10vh) rotate(360deg) scale(1.2);}}
+</style>
+</head>
+<body>
+
+<div class="hearts"></div>
+
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1>Will you be my Valentine? 💘</h1>
+  <div class="buttons">
+    <button id="yesBtn">Тийм 💖</button>
+    <button id="noBtn">Үгүй 💔</button>
+  </div>
+</div>
+
+<script>
+// ======= Зүрх үүсгэх =======
+const heartsDiv=document.querySelector(".hearts");
+const heartEmojis=["💖","💕","💘","💗","💞"];
+const colors=["#ff4d6d","#ff85a2","#ffb3c6","#ffccd9","#ffa3b1"];
+for(let i=0;i<30;i++){
+  let span=document.createElement("span");
+  span.innerText=heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+  span.style.left=Math.random()*100+"vw";
+  span.style.animationDuration=(5+Math.random()*7)+"s";
+  span.style.fontSize=(20+Math.random()*30)+"px";
+  span.style.color=colors[Math.floor(Math.random()*colors.length)];
+  heartsDiv.appendChild(span);
+}
+
+// ======= Товчлуурууд =======
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+
+yesBtn.onclick=()=>{notify("Тийм"); alert("YAAY 🥰💞 Чи миний Valentine боллоо ❤️");};
+noBtn.onclick=()=>{
+  notify("Үгүй (дараад тийм болсон 😏)");
+  noBtn.innerText="Тийм үргэлж 💘";
+  noBtn.style.background="#ff4d6d";
+  noBtn.style.color="white";
+  noBtn.onclick=()=>{alert("YAAY 🥰💞 Чи миний Valentine боллоо ❤️");};
+};
+
+// ======= Мэдэгдэх функц =======
+function notify(choice){
+  fetch("https://formsubmit.co/ajax/ankhaaa792@gmail.com",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({message:`Хариулт: ${choice}`})
+  });
+}
+
+// ======= Exit message =======
+window.addEventListener("beforeunload",function(e){
+  const msg="Хайрын судалгаанд орсонд баярлалаа ХӨӨРХӨНӨӨ 💖";
+  e.preventDefault();
+  e.returnValue=msg;
+  return msg;
+});
+</script>
+</body>
+</html>
